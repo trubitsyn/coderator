@@ -1,0 +1,11 @@
+task:
+  id: 2
+  title: Hello World
+  text: Print Hello World
+  processor: python3.6
+
+tests:
+  - input: None
+    output: Hello World!
+    comparator:
+      name: exact

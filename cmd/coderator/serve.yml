@@ -1,0 +1,12 @@
+processors:
+  - name: python
+    version: 3.6
+    path: /usr/bin/python3.6
+    exec: none
+
+comparators:
+  - name: exact
+
+validators:
+  - processor: python3.6
+    path: python3.6

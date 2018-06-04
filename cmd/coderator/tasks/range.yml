@@ -1,0 +1,12 @@
+task:
+  id: 3
+  title: Number range
+  text: Absolute value of (input - output) must not be greater 3
+  processor: python3.6
+
+tests:
+  comparator:
+    name: eps
+    values: {
+      accuracy: 3
+    }
