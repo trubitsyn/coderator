@@ -1,12 +1,12 @@
 # coderator
 Code testing system.
 
-# Building from source
+## Building from source
 1. Clone repository
 2. Run `go build cmd`
 3. You can find the binaries in `cmd` directory
 
-# LICENSE
+## LICENSE
 ```
 Copyright (C) 2018 Nikola Trubitsyn
 
