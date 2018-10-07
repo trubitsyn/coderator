@@ -17,7 +17,7 @@
  * along with coderator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package api
+package coderator
 
 type Task struct {
 	Id        uint64

@@ -17,13 +17,26 @@
  * along with coderator.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package api
+package coderator
 
-type SourceValidator interface {
-	CanValidate() bool
-	Valid() bool
+import "testing"
+
+func TestQueue(t *testing.T) {
+	task := Task{}
+	task.Id = 1
+	Queue(task)
+	if !IsVerificationQueued(task) {
+		t.Fail()
+	}
 }
 
-func FindSourceValidatorByProcessor(processor LanguageProcessor) SourceValidator {
-	return nil
+func TestDequeue(t *testing.T) {
+	task := Task{}
+	task.Id = 1
+	Queue(task)
+	Dequeue(task)
+
+	if IsVerificationQueued(task) {
+		t.Fail()
+	}
 }

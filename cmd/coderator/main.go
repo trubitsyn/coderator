@@ -22,7 +22,7 @@ package main
 import (
 	"fmt"
 	"flag"
-	"github.com/trubitsyn/coderator/api"
+	"github.com/trubitsyn/coderator/coderator"
 )
 
 func main() {
@@ -33,10 +33,10 @@ func main() {
 
 	flag.Parse()
 
-	var dataSource api.Repository
+	var dataSource coderator.Repository
 
 	if *useDatabase {
-		db, err := api.NewDatabase("coderator")
+		db, err := coderator.NewDatabase("coderator")
 
 		if err != nil {
 			panic(err)
@@ -44,8 +44,8 @@ func main() {
 
 		dataSource = db
 	} else {
-		dataSource = api.Config{}
+		dataSource = coderator.Config{}
 	}
 
-	api.Serve(dataSource, *port)
+	coderator.Serve(dataSource, *port)
 }
