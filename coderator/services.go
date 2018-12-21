@@ -21,9 +21,9 @@ package coderator
 
 import (
 	"fmt"
-	"os"
-	"mime/multipart"
 	"io"
+	"mime/multipart"
+	"os"
 	"path/filepath"
 )
 

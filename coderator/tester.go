@@ -62,7 +62,7 @@ type TimesTester struct {
 	Tester
 }
 
-func (t TimesTester) RunTests(processor LanguageProcessor, filepath string, tests[]Test) []bool {
+func (t TimesTester) RunTests(processor LanguageProcessor, filepath string, tests []Test) []bool {
 	results := make([]bool, 0)
 	for _, test := range tests {
 		func(test Test) {

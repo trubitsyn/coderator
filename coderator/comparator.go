@@ -20,9 +20,9 @@
 package coderator
 
 import (
-	"math"
-	"fmt"
 	"errors"
+	"fmt"
+	"math"
 	"os/exec"
 	"strconv"
 )

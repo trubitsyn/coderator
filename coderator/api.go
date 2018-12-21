@@ -20,12 +20,12 @@
 package coderator
 
 import (
-	"github.com/gorilla/mux"
-	"net/http"
-	"log"
 	"encoding/json"
-	"strconv"
 	"fmt"
+	"github.com/gorilla/mux"
+	"log"
+	"net/http"
+	"strconv"
 	"strings"
 )
 

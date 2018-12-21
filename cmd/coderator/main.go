@@ -20,8 +20,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 	"github.com/trubitsyn/coderator/coderator"
 )
 

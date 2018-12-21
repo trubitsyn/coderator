@@ -20,11 +20,11 @@
 package coderator
 
 import (
+	"errors"
+	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"fmt"
 	"strings"
-	"errors"
 )
 
 // FIXME: Performance of concurrent access heavily depends on disk I/O?

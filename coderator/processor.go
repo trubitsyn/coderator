@@ -20,8 +20,8 @@
 package coderator
 
 import (
-	"os/exec"
 	"fmt"
+	"os/exec"
 )
 
 type LanguageProcessor struct {
