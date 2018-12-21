@@ -74,21 +74,19 @@ func Serve(repository Repository, port int) {
 
 func tasksEndpoint(w http.ResponseWriter, r *http.Request) {
 	tasks, err := database.AllTasks()
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorNoTasks})
 		return
 	}
-
 	json.NewEncoder(w).Encode(tasks)
 }
 
 func taskEndpoint(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idParam := vars["id"]
-	id, err := strconv.ParseUint(idParam, 10, 64)
 
+	id, err := strconv.ParseUint(idParam, 10, 64)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -96,13 +94,11 @@ func taskEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	task, err := database.FindTaskById(id)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
 		return
 	}
-
 	json.NewEncoder(w).Encode(task)
 }
 
@@ -111,7 +107,6 @@ func taskTestsEndpoint(w http.ResponseWriter, r *http.Request) {
 	taskIdParam := vars["id"]
 
 	taskId, err := strconv.ParseUint(taskIdParam, 10, 64)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -119,13 +114,11 @@ func taskTestsEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tests, err := database.FindTestsByTaskId(taskId)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorNoTests})
 		return
 	}
-
 	json.NewEncoder(w).Encode(tests)
 }
 
@@ -134,7 +127,6 @@ func taskSolveEndpoint(w http.ResponseWriter, r *http.Request) {
 	idParam := vars["id"]
 
 	id, err := strconv.ParseUint(idParam, 10, 64)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -142,7 +134,6 @@ func taskSolveEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	task, err := database.FindTaskById(id)
-
 	if err != nil || task == nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -156,7 +147,6 @@ func taskSolveEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = r.ParseMultipartForm(32 << 20)
-
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(Error{"The request Content-Type is not multipart/form-data"})
@@ -164,7 +154,6 @@ func taskSolveEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	source, _, err := r.FormFile("source")
-
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(Error{"Could not parse form file"})
@@ -173,13 +162,11 @@ func taskSolveEndpoint(w http.ResponseWriter, r *http.Request) {
 	defer source.Close()
 
 	path, err := SaveSolution(*task, source)
-
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
 	go VerifyTaskSolution(*task, path)
 
 	w.Header().Set("Location", strings.Replace(PathQueue, "{id}", idParam, 1))
@@ -191,7 +178,6 @@ func taskSolveQueueEndpoint(w http.ResponseWriter, r *http.Request) {
 	idParam := vars["id"]
 
 	id, err := strconv.ParseUint(idParam, 10, 64)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorJobDoesNotExist})
@@ -199,7 +185,6 @@ func taskSolveQueueEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	task, err := database.FindTaskById(id)
-
 	if err != nil || task == nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -224,7 +209,6 @@ func taskSolveResultsEndpoint(w http.ResponseWriter, r *http.Request) {
 	idParam := vars["id"]
 
 	id, err := strconv.ParseUint(idParam, 10, 64)
-
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -232,7 +216,6 @@ func taskSolveResultsEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	task, err := database.FindTaskById(id)
-
 	if err != nil || task == nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorTaskDoesNotExist})
@@ -240,12 +223,10 @@ func taskSolveResultsEndpoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	results := GetVerificationResults(*task)
-
 	if results == nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(Error{ErrorNoResults})
 		return
 	}
-
 	json.NewEncoder(w).Encode(results)
 }
