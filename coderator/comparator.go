@@ -38,7 +38,6 @@ type ExternalComparator struct {
 
 func (c ExternalComparator) Compare(a string, b string) bool {
 	cmd := exec.Command(c.Command, a, b)
-
 	if err := cmd.Run(); err != nil {
 		fmt.Println(errors.New("Could not run command!"))
 	}
@@ -48,7 +47,6 @@ func (c ExternalComparator) Compare(a string, b string) bool {
 	}
 
 	state := cmd.ProcessState
-
 	if state != nil {
 		return state.Success()
 	}
@@ -76,6 +74,5 @@ func (c ApproximateComparator) Compare(a string, b string) bool {
 	if aerr != nil || berr != nil {
 		return false
 	}
-
 	return math.Abs(ai-bi) <= c.Accuracy
 }

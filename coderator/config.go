@@ -48,18 +48,15 @@ type ApplicationConfig struct {
 
 func (config Config) ApplicationConfig() (*ApplicationConfig, error) {
 	data, err := ioutil.ReadFile("serve" + Extension)
-
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 
 	applicationConfig := ApplicationConfig{}
-
 	if err = yaml.Unmarshal(data, &applicationConfig); err != nil {
 		return nil, err
 	}
-
 	return &applicationConfig, nil
 }
 
@@ -72,17 +69,14 @@ func (config Config) filenameForTask(task Task) string {
 
 func (config Config) AllTasks() ([]Task, error) {
 	files, err := ioutil.ReadDir(TasksDir)
-
 	if err != nil {
 		return nil, err
 	}
 
 	tasks := make([]Task, 0)
-
 	for _, file := range files {
 		taskConfig := TaskConfig{}
 		data, err := ioutil.ReadFile(TasksDir + "/" + file.Name())
-
 		if err != nil {
 			fmt.Println(err)
 			continue
@@ -92,7 +86,6 @@ func (config Config) AllTasks() ([]Task, error) {
 			fmt.Println(err)
 			continue
 		}
-
 		tasks = append(tasks, taskConfig.Task)
 	}
 	return tasks, nil
@@ -100,7 +93,6 @@ func (config Config) AllTasks() ([]Task, error) {
 
 func (config Config) FindTaskById(id uint64) (*Task, error) {
 	tasks, err := config.AllTasks()
-
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +111,6 @@ func (config Config) AddTask(task Task) {
 
 func (config Config) FindTestsByTaskId(id uint64) ([]Test, error) {
 	files, err := ioutil.ReadDir(TasksDir)
-
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +118,6 @@ func (config Config) FindTestsByTaskId(id uint64) ([]Test, error) {
 	for _, file := range files {
 		taskConfig := TaskConfig{}
 		data, err := ioutil.ReadFile(TasksDir + "/" + file.Name())
-
 		if err != nil {
 			fmt.Println(err)
 			continue

@@ -31,7 +31,6 @@ type Database struct {
 func NewDatabase(dataSourceName string) (*Database, error) {
 	connStr := "user=postgres dbname=tasks sslmode=disable " + dataSourceName
 	db, err := sql.Open("postgres", connStr)
-
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +38,6 @@ func NewDatabase(dataSourceName string) (*Database, error) {
 	if err = db.Ping(); err != nil {
 		return nil, err
 	}
-
 	return &Database{db}, nil
 }
 
@@ -48,14 +46,12 @@ func (db *Database) FindTaskById(id uint64) (*Task, error) {
 	var task Task
 	row := db.QueryRow(statement, id)
 	err := row.Scan(id, &task.Title, &task.Text)
-
 	return &task, err
 }
 
 func (db *Database) AddTask(task Task) {
 	statement := "INSERT INTO tasks (title, text) VALUES ($1, $2)"
 	_, err := db.Exec(statement, task.Title, task.Text)
-
 	if err != nil {
 		panic(err)
 	}
@@ -63,17 +59,14 @@ func (db *Database) AddTask(task Task) {
 
 func (db *Database) AllTasks() ([]Task, error) {
 	rows, err := db.Query("SELECT * FROM tasks")
-
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
 	tasks := make([]Task, 0)
-
 	for rows.Next() {
 		task := new(Task)
-
 		err := rows.Scan(&task.Title, &task.Text)
 
 		if err != nil {
@@ -90,21 +83,16 @@ func (db *Database) AllTasks() ([]Task, error) {
 
 func (db *Database) FindTestsByTaskId(taskId uint64) ([]Test, error) {
 	statement := "SELECT * from tests WHERE taskId = $1"
-
 	rows, err := db.Query(statement, taskId)
-
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
 	tests := make([]Test, 0)
-
 	for rows.Next() {
 		test := new(Test)
-
 		err := rows.Scan(&test.Id, &test.Input, &test.Output)
-
 		if err != nil {
 			return nil, err
 		}

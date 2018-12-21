@@ -33,7 +33,6 @@ type LanguageProcessor struct {
 
 func (processor LanguageProcessor) RunFile(args ...string) (string, error) {
 	out, err := exec.Command(processor.Path, args...).Output()
-
 	if err != nil {
 		fmt.Println(err)
 		return "", err

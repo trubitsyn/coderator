@@ -25,6 +25,7 @@ func TestQueue(t *testing.T) {
 	task := Task{}
 	task.Id = 1
 	Queue(task)
+
 	if !IsVerificationQueued(task) {
 		t.Fail()
 	}

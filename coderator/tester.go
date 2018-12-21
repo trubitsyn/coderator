@@ -40,7 +40,6 @@ type Tester struct {
 
 func (t Tester) RunTest(processor LanguageProcessor, filepath string, test Test) bool {
 	out, err := processor.RunFile(filepath, test.Input)
-
 	if err != nil {
 		fmt.Println(err)
 		return false

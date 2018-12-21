@@ -28,7 +28,6 @@ import (
 )
 
 var queue = make(map[uint64]bool)
-
 var verificationResults = make(map[uint64][]bool)
 
 type VerificationResult int
@@ -68,21 +67,17 @@ func GetTempFileName(task Task) string {
 func SaveSolution(task Task, file multipart.File) (string, error) {
 	tmpFileName := GetTempFileName(task)
 	tmpFile, err := os.OpenFile(tmpFileName, os.O_WRONLY|os.O_CREATE, 0777)
-
 	if err != nil {
 		return "", err
 	}
 	defer tmpFile.Close()
 
 	io.Copy(tmpFile, file)
-
 	dir, err := filepath.Abs(filepath.Dir(tmpFile.Name()))
-
 	if err != nil {
 		fmt.Println(err)
 		return "", err
 	}
-
 	path := dir + string(filepath.Separator) + tmpFile.Name()
 	return path, nil
 }
@@ -90,7 +85,6 @@ func SaveSolution(task Task, file multipart.File) (string, error) {
 func RemoveTempFiles(task Task) {
 	tmpFileName := GetTempFileName(task)
 	err := os.Remove(tmpFileName)
-
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -100,8 +94,8 @@ func VerifyTaskSolution(task Task, filepath string) VerificationResult {
 	defer RemoveTempFiles(task)
 	Queue(task)
 	defer Dequeue(task)
-	tests, err := database.FindTestsByTaskId(task.Id)
 
+	tests, err := database.FindTestsByTaskId(task.Id)
 	if err != nil {
 		fmt.Println(err)
 		verificationResults[task.Id] = nil
@@ -110,25 +104,21 @@ func VerifyTaskSolution(task Task, filepath string) VerificationResult {
 
 	config := Config{}
 	appConfig, err := config.ApplicationConfig()
-
 	if err != nil {
 		return InternalError
 	}
 
 	processor := appConfig.FindProcessorByName(task.Processor)
-
 	if processor == nil {
 		return InternalError
 	}
 
 	sourceValidator := FindSourceValidatorByProcessor(*processor)
-
 	if !sourceValidator.Valid() {
 		return BadSource
 	}
 
 	tester := Tester{}
-
 	results := tester.RunTests(*processor, filepath, tests)
 	verificationResults[task.Id] = results
 
