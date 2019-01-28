@@ -1,6 +1,8 @@
 # coderator [![Build Status](https://travis-ci.com/trubitsyn/coderator.svg?branch=master)](https://travis-ci.com/trubitsyn/coderator) [![GoDoc](https://godoc.org/github.com/trubitsyn/coderator?status.svg)](https://godoc.org/github.com/trubitsyn/coderator) [![Go Report Card](https://goreportcard.com/badge/github.com/trubitsyn/coderator)](https://goreportcard.com/report/github.com/trubitsyn/coderator)
 Code testing system.
 
+**Currently under development.**
+
 ## Building from source
 1. Clone repository
 2. Run `go build cmd`
